@@ -1,0 +1,102 @@
+body {
+    text-align: center;
+}
+
+h1 {
+    margin-top: 50px;
+}
+
+.book-form {
+    display: none; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color:rgb(255, 239, 219);
+    z-index: 1;
+}
+
+.blur { /* potential issues */
+    filter: blur(3px);
+}
+
+input#title, input#author, input#numPages {
+    border: none;
+    margin: 10px;
+    padding: 5px;
+    outline: none;
+}
+
+section {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 2em;
+    margin: 20px;
+}
+
+button {
+    border: none;
+    padding: 10px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    border-radius: 15px;
+    background-color: rgb(245, 245, 245);
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgb(235, 235, 235);
+}
+
+.book-container {
+    position: relative; /* crucial for overlay */
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    height: 180px;
+    width: 180px;
+    background-color: rgb(255, 230, 200);
+}
+
+.book-display {
+    display: flex;
+    position: absolute; /* crucial for the overlay */
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    word-spacing: 2px;
+    line-height: 2em;
+}
+
+.done-reading {
+    background-color: rgb(240, 221, 199);
+    filter: blur(2px);
+    border-radius: 20px;
+}
+
+p {
+    position: absolute;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.book-button-overlay {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    opacity: 0;
+    z-index: 1; /* makes the button appear ontop */
+}
+
+.book-button-overlay:hover {
+    opacity: 1;
+}
+
+.book-button-overlay:hover ~ .book-display { /* affect the book-display on hover with overlay */
+    filter: blur(2px);
+}

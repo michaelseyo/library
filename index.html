@@ -7,18 +7,22 @@
     <body>
         <form class='book-form'>
             <label for="title">Title:</label><br>
-            <input type="text" id="title"><br>
+            <input type="text" id="title" required><br>
             <label for="author">Author:</label><br>
-            <input type="text" id="author"><br>
+            <input type="text" id="author" required><br>
             <label for="numPages" id="numPages">Number of Pages:</label><br>
-            <input type="text" id="numPages"><br>
+            <input type="text" id="numPages" required><br>
             <button type='button' id="submit">Submit</button>
             <button type='button' id="close-form">Close</button>
+            <p id="reminder-text"> </p>
         </form>
 
         <main>
             <h1>Library</h1>
-            <button id="add-book">Add a book</button>
+            <nav>
+                <button id="add-book">Add a book</button>
+                <button id="remove-books">Remove books</button>
+            </nav>
             <section>
             
             </section>

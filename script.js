@@ -1,7 +1,7 @@
 let myLibrary = [];
 let nextId = 0;
 
-const background = document.querySelector("main");
+const background = document.querySelector("section");
 const form = document.querySelector(".book-form");
 const bookshelf = document.querySelector("section");
 
@@ -86,8 +86,17 @@ function displayBook(book) {
     readBtn.textContent = "Read";
     readBtn.type = "button";
     readBtn.id = "read";
+
+    // styling for existing books
+    if (book.completed) {
+        bookDisplay.classList.add("done-reading");
+        readStatusText.textContent = "Read";
+        readBtn.textContent = "Unread";
+        bookContainer.appendChild(readStatusText);
+    }
+
     readBtn.addEventListener("click", function() {    
-        if (!book.completed) {
+        if (!book.completed) { // for existing books
             bookDisplay.classList.add("done-reading");
             readStatusText.textContent = "Read";
             readBtn.textContent = "Unread";
@@ -141,3 +150,6 @@ document.body.onload = function() {
         myLibrary.forEach(book => displayBook(book));
     }
 }
+
+// buggy when we have existing books in storage and when we press 'read' on them, status changes to completed = true
+// but when refresh page, we need to set it up such that display shows that are read alrdy.

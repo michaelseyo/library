@@ -18,22 +18,50 @@ header {
     box-shadow: 0 4px 4px rgba(170, 170, 170, 0.6);
 }
 
-button#add-book {
+#header-books-icon {
+    height: 30px;
+    width: 30px;
+    margin: 0 15px 0 5px;
+    user-select: none;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+#add-books-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#add-book-icon {
     margin: 0;
     border-radius: 0;
     padding: 15px 20px;
+    width: 20px;
     background-color: rgb(224, 193, 153);
+    user-select: none;
 }
 
-button#add-book:hover {
+#add-book-icon:hover {
     background-color: rgb(221, 174, 112);
     transition: 0.5s;
+}
+
+#remove-books-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 button#remove-books {
     margin: 0;
     border-radius: 0;
-    padding: 15px 20px;
+    padding: 15px 0px 15px 20px;
+    width: 120px;
     background-color: rgb(224, 193, 153);
 }
 
@@ -42,8 +70,16 @@ button#remove-books:hover {
     transition: 0.5s;
 }
 
+#bin-icon {
+    position: absolute;
+    left: 0.7em;
+    height: 20px;
+    width: 20px;
+    user-select: none;
+}
+
 h1 {
-    margin: 0 1em;
+    margin: 0 0 0 1em;
     font-size: 25px;
 }
 
@@ -55,6 +91,7 @@ h1 {
     text-align: center;
     transform: translate(-50%, -50%);
     padding: 30px 20px;
+    min-width: 205px;
     border-radius: 20px;
     background-color:rgb(235, 215, 178);
     box-shadow: 0 2px 2px rgb(170, 170, 170);
@@ -71,7 +108,7 @@ h1 {
     font-weight: bold;
 }
 
-.blur { /* potential issues */
+.blur { 
     filter: blur(4px);
 }
 
@@ -87,7 +124,7 @@ main {
     padding-top: 50px;
 }
 
-section {
+.library {
     min-height: 80vh;
     display: grid;
     grid-template-columns: repeat(4, auto);
@@ -103,13 +140,13 @@ button {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     border-radius: 10px;
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(255, 255, 255);
 }
 
 button:hover {
     cursor: pointer;
     transition: 0.5s;
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(240, 240, 240);
 }
 
 button:active {
@@ -166,7 +203,19 @@ button:active {
 }
 
 .book-button-overlay:hover ~ .book-display { /* affect the book-display on hover with overlay */
-    filter: blur(2px);
+    filter: blur(5px);
+}
+
+#delete-icon {
+    height: 40px;
+    width: 40px;
+    user-select: none;
+}
+
+#read-icon {
+    height: 40px;
+    width: 40px;
+    user-select: none;
 }
 
 p {

@@ -1,11 +1,11 @@
 let myLibrary = [];
 let nextId = 0;
 
-const background = document.querySelector("section");
+const background = document.querySelector(".library");
 const form = document.querySelector(".book-form");
 const bookshelf = document.querySelector("section");
 
-const addBookBtn = document.querySelector("#add-book");
+const addBookBtn = document.querySelector("#add-book-icon");
 const removeBooksBtn = document.querySelector("#remove-books");
 const closeFormBtn = document.querySelector("#close-form");
 const submitBtn = document.querySelector("#submit");
@@ -67,12 +67,10 @@ function displayBook(book) {
     btnContainer.classList.add("book-button-overlay");
 
     // create deleteBtn
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.type = "button";
-    deleteBtn.id = "delete";
-
-    // create deleteBtn functionality
+    const deleteBtn = document.createElement("input");
+    deleteBtn.type = "image";
+    deleteBtn.src = "icons/bin.png";
+    deleteBtn.id = "delete-icon";
     deleteBtn.addEventListener("click", function() {
         bookshelf.removeChild(bookContainer);
         const index = myLibrary.findIndex(b => b.id === book.id);
@@ -81,11 +79,26 @@ function displayBook(book) {
     });
     
     // create readBtn
-    const readBtn = document.createElement("button");
+    const readBtn = document.createElement("input");
     const readStatusText = document.createElement("p"); 
-    readBtn.textContent = "Read";
-    readBtn.type = "button";
-    readBtn.id = "read";
+    readBtn.type = "image";
+    readBtn.src = "icons/done-read.png";
+    readBtn.id = "read-icon";
+    readBtn.addEventListener("click", function() {    
+        if (!book.completed) { // for existing books
+            bookDisplay.classList.add("done-reading");
+            readStatusText.textContent = "Read";
+            readBtn.src = "icons/not-done-read.png";
+            bookContainer.appendChild(readStatusText);
+            book.completed = true;
+        } else {
+            bookDisplay.classList.remove("done-reading");
+            readBtn.src = "icons/done-read.png";
+            readStatusText.textContent = "";
+            book.completed = false;
+        }
+        updateLibrary();
+    });
 
     // styling for existing books
     if (book.completed) {
@@ -95,37 +108,18 @@ function displayBook(book) {
         bookContainer.appendChild(readStatusText);
     }
 
-    readBtn.addEventListener("click", function() {    
-        if (!book.completed) { // for existing books
-            bookDisplay.classList.add("done-reading");
-            readStatusText.textContent = "Read";
-            readBtn.textContent = "Unread";
-            bookContainer.appendChild(readStatusText);
-            book.completed = true;
-        } else {
-            bookDisplay.classList.remove("done-reading");
-            readBtn.textContent = "Read";
-            readStatusText.textContent = "";
-            book.completed = false;
-        }
-        updateLibrary();
-    });
-
     // adding
     btnContainer.appendChild(deleteBtn);
     btnContainer.appendChild(readBtn);
     bookContainer.appendChild(btnContainer);
     bookContainer.appendChild(bookDisplay);
     bookshelf.appendChild(bookContainer);
-
-    console.log(myLibrary); //
 }
 
 addBookBtn.addEventListener("click", displayForm);
 removeBooksBtn.addEventListener("click", function() {
-    const delButtons = document.querySelectorAll("#delete");
+    const delButtons = document.querySelectorAll("#delete-icon");
     delButtons.forEach(btn => btn.click());
-    console.log(myLibrary);
 });
 closeFormBtn.addEventListener("click", closeForm);
 submitBtn.addEventListener("click", function() {
@@ -141,7 +135,6 @@ form.addEventListener('submit', function(e) {
     e.preventDefault();
 });
 
-
 document.body.onload = function() {
     myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
     if (myLibrary === null) {
@@ -150,6 +143,3 @@ document.body.onload = function() {
         myLibrary.forEach(book => displayBook(book));
     }
 }
-
-// buggy when we have existing books in storage and when we press 'read' on them, status changes to completed = true
-// but when refresh page, we need to set it up such that display shows that are read alrdy.

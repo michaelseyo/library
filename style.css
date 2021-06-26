@@ -1,0 +1,226 @@
+body {
+    background-color: rgb(235, 222, 197);
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color:rgb(224, 193, 153);
+    z-index: 3;
+    align-items: center;
+    box-shadow: 0 2px 2px rgb(170, 170, 170);
+    box-shadow: 0 4px 4px rgba(170, 170, 170, 0.6);
+}
+
+#header-books-icon {
+    height: 30px;
+    width: 30px;
+    margin: 0 15px 0 5px;
+    user-select: none;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+#add-books-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#add-book-icon {
+    margin: 0;
+    border-radius: 0;
+    padding: 15px 20px;
+    width: 20px;
+    background-color: rgb(224, 193, 153);
+    user-select: none;
+}
+
+#add-book-icon:hover {
+    background-color: rgb(221, 174, 112);
+    transition: 0.5s;
+}
+
+#remove-books-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button#remove-books {
+    margin: 0;
+    border-radius: 0;
+    padding: 15px 0px 15px 20px;
+    width: 120px;
+    background-color: rgb(224, 193, 153);
+}
+
+button#remove-books:hover {
+    background-color: rgb(221, 174, 112);
+    transition: 0.5s;
+}
+
+#bin-icon {
+    position: absolute;
+    left: 0.7em;
+    height: 20px;
+    width: 20px;
+    user-select: none;
+}
+
+h1 {
+    margin: 0 0 0 1em;
+    font-size: 25px;
+}
+
+.book-form {
+    display: none; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    padding: 30px 20px;
+    min-width: 205px;
+    border-radius: 20px;
+    background-color:rgb(235, 215, 178);
+    box-shadow: 0 2px 2px rgb(170, 170, 170);
+    box-shadow: 0 4px 4px rgba(170, 170, 170, 0.6);
+    z-index: 2;
+}
+
+#reminder-text {
+    position: absolute;
+    margin: 0 auto 0 auto;
+    left: 0;
+    right: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.blur { 
+    filter: blur(4px);
+}
+
+input#title, input#author, input#numPages {
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+    outline: none;
+}
+
+main {
+    padding-top: 50px;
+}
+
+.library {
+    min-height: 80vh;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    place-items: center;
+    gap: 2em;
+    margin: 20px;
+}
+
+button {
+    border: none;
+    margin: 10px;
+    padding: 10px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+button:hover {
+    cursor: pointer;
+    transition: 0.5s;
+    background-color: rgb(240, 240, 240);
+}
+
+button:active {
+    transform: scale(1.03);
+    transition: 0.05s;
+}
+
+.book-container {
+    position: relative; /* crucial for overlay */
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    height: 200px;
+    width: 200px;
+    background-color: rgb(231, 210, 171);
+}
+
+.book-display {
+    display: flex;
+    position: absolute; /* crucial for the overlay */
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    word-spacing: 2px;
+    line-height: 2em;
+}
+
+.done-reading {
+    background-color: rgb(224, 193, 153);
+    filter: blur(2px);
+    border-radius: 20px;
+}
+
+#read-status {
+    position: absolute;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.book-button-overlay {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    opacity: 0;
+    z-index: 1; /* makes the button appear ontop */
+}
+
+.book-button-overlay:hover {
+    opacity: 1;
+}
+
+.book-button-overlay:hover ~ .book-display { /* affect the book-display on hover with overlay */
+    filter: blur(5px);
+}
+
+#delete-icon {
+    height: 40px;
+    width: 40px;
+    user-select: none;
+}
+
+#read-icon {
+    height: 40px;
+    width: 40px;
+    user-select: none;
+}
+
+p {
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 1;
+}

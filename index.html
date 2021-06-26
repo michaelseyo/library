@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Library</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <form class='book-form'>
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" required><br>
+            <label for="author">Author:</label><br>
+            <input type="text" id="author" required><br>
+            <label for="numPages" id="numPages">Number of Pages:</label><br>
+            <input type="text" id="numPages" required><br>
+            <button type='button' id="submit">Submit</button>
+            <button type='button' id="close-form">Close</button>
+            <p id="reminder-text"> </p>
+        </form>
+
+        <main>
+            <header>
+                <h1>Library</h1>
+                <img src="icons/books.png" alt="pile of books" id='header-books-icon'>
+                <nav>
+                    <input type="image" id="add-book-icon" src="icons/add.png">
+                    <div id='remove-books-container'>
+                        <button id="remove-books">Remove all</button>
+                        <img src="icons/bin.png" alt="a bin icon for delete" id='bin-icon'>
+                    </div>
+                </nav>
+            </header>
+            <section class="library">
+            
+            </section>
+        </main>
+        <script src="script.js"></script>
+    </body>
+</html>

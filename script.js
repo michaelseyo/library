@@ -11,21 +11,100 @@ const closeFormBtn = document.querySelector("#close-form");
 const submitBtn = document.querySelector("#submit");
 const reminderText = document.querySelector("#reminder-text");
 
-function Book(title, author, numPages) {
-    this.title = title;
-    this.author = author;
-    this.numPages = numPages;
-    this.completed = false;
-    this.id = nextId++;
+class Book {
+    constructor(title, author, numPages, completed) {
+        this.title = title;
+        this.author = author;
+        this.numPages = numPages;
+        this.completed = completed
+        this.id = nextId++;
+    }
+
+    updateLibrary(book) {
+        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    }
+
+    addBookToLibrary() {
+        myLibrary.push(this);
+        this.updateLibrary();
+    }
+
+    displayBook() {
+        let self = this;
+        const bookContainer = document.createElement("div");
+        const bookDisplay = document.createElement("div"); 
+        bookContainer.setAttribute("data-id", self.id); 
+
+        // styling
+        bookContainer.classList.add("book-container");
+        bookDisplay.innerText = `Title: ${self.title}\n Author: ${self.author}\n Number of Pages: ${self.numPages}\n`;
+        bookDisplay.classList.add("book-display");
+
+        // hidden buttons
+        const btnContainer = document.createElement("nav");
+        btnContainer.classList.add("book-button-overlay");
+
+        // create deleteBtn
+        const deleteBtn = document.createElement("input");
+        deleteBtn.type = "image";
+        deleteBtn.src = "icons/bin.png";
+        deleteBtn.id = "delete-icon";
+        deleteBtn.addEventListener("click", self.deleteBook.bind(self, bookContainer));
+        
+        // create readBtn
+        const readBtn = document.createElement("input");
+        const readStatusText = document.createElement("p"); 
+        readBtn.type = "image";
+        readBtn.src = "icons/done-read.png";
+        readBtn.id = "read-icon";
+        readBtn.addEventListener("click", self.readBook.bind(self, bookDisplay, readStatusText, readBtn, bookContainer));
+
+        // styling for existing books
+        if (self.completed) {
+            bookDisplay.classList.add("done-reading");
+            readStatusText.textContent = "Read";
+            readBtn.textContent = "Unread";
+            bookContainer.appendChild(readStatusText);
+        }
+
+        // adding
+        btnContainer.appendChild(deleteBtn);
+        btnContainer.appendChild(readBtn);
+        bookContainer.appendChild(btnContainer);
+        bookContainer.appendChild(bookDisplay);
+        bookshelf.appendChild(bookContainer);
+    }
+
+    deleteBook(bookContainer) {
+        bookshelf.removeChild(bookContainer);
+        const index = myLibrary.findIndex(b => b.id === this.id);
+        myLibrary.splice(index, 1);
+        this.updateLibrary();
+        console.log(myLibrary);
+    }
+
+    readBook(bookDisplay, readStatusText, readBtn, bookContainer) {
+        if (!this.completed) { // for existing books
+            bookDisplay.classList.add("done-reading");
+            readStatusText.textContent = "Read";
+            readBtn.src = "icons/not-done-read.png";
+            bookContainer.appendChild(readStatusText);
+            this.completed = true;
+        } else {
+            bookDisplay.classList.remove("done-reading");
+            readBtn.src = "icons/done-read.png";
+            readStatusText.textContent = "";
+            this.completed = false;
+        }
+        this.updateLibrary();
+    }
 }
 
-function updateLibrary() {
-    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
-}
-
-function addBookToLibrary(book) {
-    myLibrary.push(book);
-    updateLibrary();
+function fromJson(json) {
+    // retrieved information from the stored localStorage for each book (which was stored as an Object, not Book)
+    let createdBook = new Book(json.title, json.author, json.numPages, json.completed);
+    createdBook.displayBook();
+    return createdBook;
 }
 
 function displayForm() {
@@ -44,76 +123,12 @@ function validateForm(title, author, numPages) {
         reminderText.textContent = 'Please fill up accordingly!';
     } else {
         reminderText.textContent = '';
-        const newBook = new Book(title, author, numPages);
-        addBookToLibrary(newBook);
+        const newBook = new Book(title, author, numPages, false);
+        newBook.addBookToLibrary();
         closeForm();
-        displayBook(newBook);
+        newBook.displayBook();
         background.classList.remove("blur");
     }
-}
-
-function displayBook(book) {
-    const bookContainer = document.createElement("div");
-    const bookDisplay = document.createElement("div"); 
-    bookContainer.setAttribute("data-id", book.id); 
-
-    // styling
-    bookContainer.classList.add("book-container");
-    bookDisplay.innerText = `Title: ${book.title}\n Author: ${book.author}\n Number of Pages: ${book.numPages}\n`;
-    bookDisplay.classList.add("book-display");
-
-    // hidden buttons
-    const btnContainer = document.createElement("nav");
-    btnContainer.classList.add("book-button-overlay");
-
-    // create deleteBtn
-    const deleteBtn = document.createElement("input");
-    deleteBtn.type = "image";
-    deleteBtn.src = "icons/bin.png";
-    deleteBtn.id = "delete-icon";
-    deleteBtn.addEventListener("click", function() {
-        bookshelf.removeChild(bookContainer);
-        const index = myLibrary.findIndex(b => b.id === book.id);
-        myLibrary.splice(index, 1);
-        updateLibrary();
-    });
-    
-    // create readBtn
-    const readBtn = document.createElement("input");
-    const readStatusText = document.createElement("p"); 
-    readBtn.type = "image";
-    readBtn.src = "icons/done-read.png";
-    readBtn.id = "read-icon";
-    readBtn.addEventListener("click", function() {    
-        if (!book.completed) { // for existing books
-            bookDisplay.classList.add("done-reading");
-            readStatusText.textContent = "Read";
-            readBtn.src = "icons/not-done-read.png";
-            bookContainer.appendChild(readStatusText);
-            book.completed = true;
-        } else {
-            bookDisplay.classList.remove("done-reading");
-            readBtn.src = "icons/done-read.png";
-            readStatusText.textContent = "";
-            book.completed = false;
-        }
-        updateLibrary();
-    });
-
-    // styling for existing books
-    if (book.completed) {
-        bookDisplay.classList.add("done-reading");
-        readStatusText.textContent = "Read";
-        readBtn.textContent = "Unread";
-        bookContainer.appendChild(readStatusText);
-    }
-
-    // adding
-    btnContainer.appendChild(deleteBtn);
-    btnContainer.appendChild(readBtn);
-    bookContainer.appendChild(btnContainer);
-    bookContainer.appendChild(bookDisplay);
-    bookshelf.appendChild(bookContainer);
 }
 
 addBookBtn.addEventListener("click", displayForm);
@@ -126,7 +141,6 @@ submitBtn.addEventListener("click", function() {
     const title = document.querySelector("input#title").value;
     const author = document.querySelector("input#author").value;
     const numPages = document.querySelector("input#numPages").value;
-
     validateForm(title, author, numPages);
 });
 
@@ -140,6 +154,6 @@ document.body.onload = function() {
     if (myLibrary === null) {
         myLibrary = [];
     } else {
-        myLibrary.forEach(book => displayBook(book));
+        myLibrary = myLibrary.map(json => fromJson(json));
     }
 }

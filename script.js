@@ -5,6 +5,10 @@ const background = document.querySelector(".library");
 const form = document.querySelector(".book-form");
 const bookshelf = document.querySelector("section");
 
+const titleInput = document.querySelector("#title");
+const authorInput = document.querySelector("#author");
+const numPagesInput = document.querySelector("#numPages");
+
 const addBookBtn = document.querySelector("#add-book-icon");
 const removeBooksBtn = document.querySelector("#remove-books");
 const closeFormBtn = document.querySelector("#close-form");
@@ -118,16 +122,20 @@ function closeForm() {
     reminderText.textContent = '';
 }
 
-function validateForm(title, author, numPages) {
-    if (!(title && author && numPages)) {
-        reminderText.textContent = 'Please fill up accordingly!';
-    } else {
+function validateForm() {
+    if (titleInput.checkValidity() && authorInput.checkValidity() 
+        && numPagesInput.checkValidity()) {
+        const title = titleInput.value;
+        const author = authorInput.value;
+        const numPages = numPagesInput.value;
         reminderText.textContent = '';
         const newBook = new Book(title, author, numPages, false);
         newBook.addBookToLibrary();
         closeForm();
         newBook.displayBook();
         background.classList.remove("blur");
+    } else {
+        reminderText.textContent = "Please fill in properly!"
     }
 }
 
@@ -138,10 +146,7 @@ removeBooksBtn.addEventListener("click", function() {
 });
 closeFormBtn.addEventListener("click", closeForm);
 submitBtn.addEventListener("click", function() {
-    const title = document.querySelector("input#title").value;
-    const author = document.querySelector("input#author").value;
-    const numPages = document.querySelector("input#numPages").value;
-    validateForm(title, author, numPages);
+    validateForm();
 });
 
 // local storage

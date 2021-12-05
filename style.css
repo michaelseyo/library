@@ -99,6 +99,10 @@ h1 {
     z-index: 2;
 }
 
+input:invalid {
+    box-shadow: 0 0 5px red;
+}
+
 #reminder-text {
     position: absolute;
     margin: 0 auto 0 auto;

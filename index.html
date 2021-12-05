@@ -7,11 +7,11 @@
     <body>
         <form class='book-form'>
             <label for="title">Title:</label><br>
-            <input type="text" id="title" required><br>
+            <input type="text" id="title" required minlength="1"><br>
             <label for="author">Author:</label><br>
-            <input type="text" id="author" required><br>
-            <label for="numPages" id="numPages">Number of Pages:</label><br>
-            <input type="text" id="numPages" required><br>
+            <input type="text" id="author" required minlength="1" maxlength="20" pattern="[a-zA-Z.-]+"><br>
+            <label for="numPages">Number of Pages:</label><br>
+            <input type="number" id="numPages" required min="1" max="1000"><br>
             <button type='button' id="submit">Submit</button>
             <button type='button' id="close-form">Close</button>
             <p id="reminder-text"> </p>
